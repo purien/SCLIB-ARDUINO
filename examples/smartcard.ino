@@ -538,21 +538,6 @@ void Bin2ascii(char *bin, int len, char *buffer)
   buffer[len * 2] = '\0';
 }
 
-
-
-void bin2ascii(char *bin, int len, char *buffer)
-{ int i;
-  for (i = 0; i < len; i++)
-  {
-    char nib1 = (bin[i] >> 4) & 0x0F;
-    char nib2 = (bin[i] >> 0) & 0x0F;
-    buffer[i * 2 + 0] = nib1  < 0xA ? '0' + nib1  : 'a' + nib1  - 0xA;
-    buffer[i * 2 + 1] = nib2  < 0xA ? '0' + nib2  : 'a' + nib2  - 0xA;
-  }
-  buffer[len * 2] = '\0';
-}
-
-
 bool PTS(char TA)
 {
   //char buf[] =  {(char)0xFF, (char)0x70, (char)0x11, (char)0, (char)0, (char)0 };
