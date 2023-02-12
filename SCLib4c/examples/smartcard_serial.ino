@@ -1206,7 +1206,8 @@ int sendt1(char *req, int asize, char *resp,uint8_t ifs)
    len-= lfrag;
 
    result= sc._receiveASyncBytes_T1((uint8_t*)pt1,3+ledc,sc._bwt,sc._cwt);
-  
+   delayMicroseconds(sc._bgt);
+   
    if (fdebug) myPrintf("RxT1",pt1,result);
    
    if (result != (3+ledc)) return -1 ;
@@ -1218,7 +1219,7 @@ int sendt1(char *req, int asize, char *resp,uint8_t ifs)
    else
    return -1;
    
-   delayMicroseconds(sc._bgt);
+   
 
   }
 
@@ -1289,27 +1290,26 @@ int send_apdu(char *req, int asize, char *resp, bool foutput,bool first)
 loop_t1:       
     sc.lasterror=0;
     if (do_verbose) 
-    { if (t1first) 
-      { t1=micros(); 
-       //t1first=false;
-      }
+    { if    (t1first)  t1=micros(); 
       else {t2=micros();MySerial.print((t2-t1)/1000);MySerial.println("ms");}
-      // myPrintf("TxT1",pt1,t1len);
     }
 
     if (t1first)
     { t1first=false; 
-      //sendt1(pt1+3,t1len-4,resp,254);
       result= sendt1(req,asize,resp,myifs);
-      if (result != 0) return -1;
+      if (result != 0) 
+      { delayMicroseconds(sc._bgt);
+        return -1;
+      }
     }
     else
-    {  delayMicroseconds(sc._bgt);
-       sc._sendASyncBytes_T1((uint8_t *)pt1,(uint16_t) t1len);
-    }
+    { sc._sendASyncBytes_T1((uint8_t *)pt1,(uint16_t) t1len); }
     
     pt1= resp + ptrt1;
+   
     result= sc._receiveASyncBytes_T1((uint8_t*)pt1,(uint16_t)t1rx,sc._bwt,sc._cwt);
+    delayMicroseconds(sc._bgt);
+   
     if (result > 0)  
     {if (do_verbose) myPrintf("RxT1",pt1,result);
      
@@ -1346,9 +1346,6 @@ loop_t1:
       
       if ( (pt1[1] & 0xBF) != (char)0)
       {  if (do_verbose) MySerial.println("\n!!! send_apdu T=1 ERROR !!!\n");
-         
-         //myPrintf("RxT1",pt1,result);
-         
          delay(1000);
          return -1;
       }
