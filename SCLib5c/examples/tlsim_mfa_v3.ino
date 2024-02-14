@@ -1,9 +1,11 @@
+/*
+  tlsim_v3.ino - Smart Card library version 7
+  Copyright (c) 2024 Pascal Urien
+*/
+
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <SCLib5c.h>
-
-// https://forum.arduino.cc/t/need-help-uploading-sketch-to-leonardo-pro-micro-board-without-bootloader/650579/8
-// C:\arduino-1.8.9\hardware\arduino\avr\board.txt
 
 ////////////////////
 // #define MINIPRO
@@ -13,7 +15,6 @@
 
 bool auto_p = true;
 #define ATRVERBOSE
-
 
 #define MINIPRO_CLK 16;//8 ou 16MHZ
 
@@ -316,35 +317,34 @@ char histbytes[15];
 // and the SC_C1_VCC can be changed to any other "free" digital pin
 
 #ifdef ATMEGA2560
-#define SC_C7_IO     26 // 39// 42 // 38
-#define SC_C2_RST    24 // 41 //40
-#define SC_C1_VCC    22 // 43 //5   // 42
+#define SC_C7_IO     26 
+#define SC_C2_RST    24 
+#define SC_C1_VCC    22 
 #define SC_C2_CLK    11  // timer 1 
-//#define SC_C2_CLK    46  // Timer 5 
+//#define SC_C2_CLK  46  // Timer 5 
 #else
 
 
 #ifdef MINIPRO
-#define SC_C2_RST    7  // 14   // D10  // 38  //  Vert
-#define SC_C1_VCC    6  // 15   // D11  // 40  //  Rouge/Orange 
-#define SC_C7_IO     8   // 12   //  D8  // 36  //  Jaune 
-#define SC_C2_CLK    9   // 13   //  D9  // 11  //  Marron // OC1A   NANO=> D9 p13
+#define SC_C2_RST    7  
+#define SC_C1_VCC    6  
+#define SC_C7_IO     8   
+#define SC_C2_CLK    9   
 #elif defined(LEONARDO)
-#define SC_C2_RST    7  // 14   // D10  // 38  //  Vert
-#define SC_C1_VCC    6  // 15   // D11  // 40  //  Rouge/Orange 
-#define SC_C7_IO     8   // 12   //  D8  // 36  //  Jaune 
-#define SC_C2_CLK    9   // 13   //  D9  // 11  //  Marron // OC1A   NANO=> D9 p13
+#define SC_C2_RST    7  
+#define SC_C1_VCC    6  
+#define SC_C7_IO     8   
+#define SC_C2_CLK    9  
 #else
-#define SC_C2_RST    10  // 14   // D10  // 38  //  Vert
-#define SC_C1_VCC    11  // 15   // D11  // 40  //  Rouge/Orange 
-#define SC_C7_IO     8   // 12   //  D8  // 36  //  Jaune 
-#define SC_C2_CLK    9   // 13   //  D9  // 11  //  Marron // OC1A   NANO=> D9 p13
+#define SC_C2_RST    10  
+#define SC_C1_VCC    11  
+#define SC_C7_IO     8   
+#define SC_C2_CLK    9  
 #endif
 #endif
  
 // Create SmartCardReader object for further use
 SmartCardReader5c sc(SC_C7_IO, SC_C2_RST, SC_C1_VCC,SC_C2_CLK);
-
 
 void reboot(int reason)
 {
