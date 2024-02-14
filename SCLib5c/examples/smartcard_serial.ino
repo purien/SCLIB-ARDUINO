@@ -2,7 +2,7 @@
 #include <SCLib5c.h>
 
 bool    fdebug=false ; 
-bool    flocal=true; //false ; // false= modeX en reception
+bool    flocal=true; // false= modeX en reception
 #define MY_PTCOL 0 
 bool    auto_p=true  ;
 
