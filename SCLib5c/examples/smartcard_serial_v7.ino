@@ -1,3 +1,8 @@
+/*
+  smartcard_serial_v7.ino - Smart Card library version 7
+  Copyright (c) 2024 Pascal Urien
+*/
+
 #include <Arduino.h>
 #include <SCLib5c.h>
 
@@ -119,11 +124,6 @@ A 00D00000FFA55AA55AA55AA55AA55AA55AA55AA55AA55AA55AA55AA55AA55AA55AA55AA55AA55A
 A 00B00000F0
 S 00B0000000
 */
-
-
-// If you are using a Arduino Mega compatible board you need to change the SC_C2_CLK to 11 as the TIMER1A
-// is used for asynchronous clock generation (1MHz with just plain arduino code is no fun ;-) )
-// and the SC_C1_VCC can be changed to any other "free" digital pin
 
 #ifdef ATMEGA2560
 #define SC_C7_IO     4 
